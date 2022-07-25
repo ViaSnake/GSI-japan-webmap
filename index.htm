@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+  <meta charset="utf-8">
+  <title>14</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.min.css" integrity="sha512-oIQ0EBio8LJupRpgmDsIsvm0Fsr6c3XNHLB7at5xb+Cf6eQuCX9xuX8XXGRIcokNgdqL1ms7nqbQ6ryXMGxXpg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.8.0/leaflet.min.js" integrity="sha512-TL+GX2RsOUlTndpkgHVnSQ9r6zldqHzfyECrdabkpucdFroZ3/HAhMmP2WYaPjsJCoot+0McmdPOLjmmicG9qg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script>
+    $(function () {
+      let map = init_map();
+    });
+
+    function init_map() {
+      let attribution = '<a href="https://maps.gsi.go.jp/development/ichiran.html">地理院タイル</a>';
+      let std = L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png", {
+        minZoom: 2,
+        maxZoom: 8,
+        attribution: attribution
+      });
+      let pale = L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/pale/{z}/{x}/{y}.png", {
+        minZoom: 1,
+        maxZoom: 8,
+        attribution: attribution
+      });
+      let blank = L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/blank/{z}/{x}/{y}.png", {
+        minZoom: 5,
+        maxZoom: 14,
+        attribution: attribution
+      });
+      let seamlessphoto = L.tileLayer("https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg", {
+        minZoom: 2,
+        maxZoom: 18,
+        attribution: attribution
+      });
+
+      let map = L.map('map', {
+        center: [35.681382, 139.766084],
+        zoom: 8,
+        layers: [std]
+      });
+
+      let baseLayerControls = {
+        "標準地図": std,
+        "淡色地図": pale,
+        "白地図": blank,
+        "写真": seamlessphoto
+      };
+
+      L.control.layers(baseLayerControls, null, { collapsed: false }).addTo(map);
+
+      return map;
+    }
+  </script>
+</head>
+
+<body>
+  <div id="map" style="width: 800px; height: 600px"></div>
+</body>
+
+</html>
